@@ -51,16 +51,18 @@ int zMax; //Maximum z Value
 int zVal; //Current z Value
 
 /*============================ Internet Connection =====================================*/
-byte server[] = { 107, 170, 177, 5 }; // matheusfonseca.me
-int  port = 1883;
-char *apn = "zap.vivo.com.br";
-char *usr = "vivo";
-char *psw = "vivo";
+byte server[] = { 127, 0, 0, 1 }; // provide your broker IP address
+int  port = 1883; //broker port
+// needed for GPRS network connection
+char *apn = "zap.example.com.br"; // your chip's phone company apn
+char *usr = "vivo"; // its user
+char *psw = "vivo"; // and password
 
 /*=============================== MQTT Topics ==========================================*/
-char *pwrTopic = "sisafa_test/power";
-char *stsTopic = "sisafa_test/status";
-char *gpsTopic = "sisafa_test/gps";
+// some test MQTT topics
+char *pwrTopic = "test/power";
+char *stsTopic = "test/status";
+char *gpsTopic = "test/gps";
 
 /*================================= Clients ============================================*/
 SIM908Client simClient(0,1,5,4,3);
@@ -68,7 +70,7 @@ PubSubClient mqttClient(server, port, msg_callback, simClient);
 
 void setup()
 {
-    setPins();    
+    setPins();
     delay(500);
     setFuel(true);
     calibrateAccel();
@@ -200,7 +202,7 @@ void sendGps()
       mqttClient.publish(gpsTopic,simClient.getGPS());
       sendGpsData = false;
       noTone(buzzerPin);
-      delay(500);  
+      delay(500);
     }
 }
 
@@ -253,17 +255,17 @@ void setPins()
     pinMode(fuel, OUTPUT);
     pinMode(11, OUTPUT);
     pinMode(12, OUTPUT);
-   
+
     //all input pins should be initialized here
     digitalWrite(interrupter,LOW);
     digitalWrite(A1, LOW);
     digitalWrite(11, HIGH);
     digitalWrite(12, LOW);
-}  
+}
 
-void setFuel(boolean op) 
+void setFuel(boolean op)
 {
-   if(op) 
+   if(op)
        digitalWrite(fuel,HIGH);
    else
        digitalWrite(fuel,LOW);
@@ -311,11 +313,11 @@ void startModule()
         simClient.attach(apn,usr,psw);
 
         //setup used message protocol
-        if (mqttClient.connect("10k2D129", "sisafa_test", "T5KIP1")) {
+        //provide your brokers information here...
+        if (mqttClient.connect("10k2D129", "test", "T5KIP1")) {
             //when connected, must subscribe topic power
             subscribed = mqttClient.subscribe(pwrTopic);
         }
     }
     buzz(2,40,600);
 }
-
