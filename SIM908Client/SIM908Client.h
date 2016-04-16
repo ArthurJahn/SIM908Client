@@ -78,9 +78,9 @@ public:
     virtual uint8_t connected();
     virtual void flush();
     virtual void stop();
-    virtual void enableGsm();
+    virtual void enableGSM();
 
-    virtual void enableGps();
+    virtual void enableGPS();
     virtual int8_t startGPS();
     virtual char* getGPS();
     virtual int8_t convert2Degrees(char* input);

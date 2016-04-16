@@ -74,7 +74,7 @@ void SIM908Client::begin(int speed)
     digitalWrite(_pwrPin, LOW);
     delay(6000);
     //start shield in gsm mode.
-    enableGsm();
+    enableGSM();
 
     tries = 3;
     while ((_state == STATE_INACTIVE) && (tries-- > 0)) {
@@ -301,12 +301,12 @@ void SIM908Client::stop()
     _state = STATE_IDLE;
 }
 
-void SIM908Client::enableGps(){
+void SIM908Client::enableGPS(){
     digitalWrite(_gpsPin,LOW);//Enable GPS mode
     digitalWrite(_gsmPin,HIGH);//Disable GSM mode
 }
 
-void SIM908Client::enableGsm(){
+void SIM908Client::enableGSM(){
     digitalWrite(_gsmPin,LOW);//Enable GSM mode
     digitalWrite(_gpsPin,HIGH);//Disable GPS mode
 }
